@@ -19,10 +19,9 @@ string prioridad_a_string(int prioridad) {
         case SECURITY: return "SECURITY";
         default: return "UNKNOWN"; 
     }
-} //vale la pena usar enum?
+} 
 
 void logMessage(string mensaje, int prioridad){
-
     ofstream outFile("logreport", ios :: app);
     if (outFile.is_open()){
         outFile << "[" + prioridad_a_string(prioridad) + "] " + mensaje << endl; 
