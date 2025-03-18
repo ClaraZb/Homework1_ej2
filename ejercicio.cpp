@@ -4,12 +4,23 @@
 
 using namespace std;
 
-//PREGUNTAS
-//vale la pena usar enum?
+/* 
+2.a)
+Al principio iba a usar diccionarios para asignarle a cada numero un mensaje (ej: 1: CRITICAL). Hasta que
+se dijo que no se podia asi que use enums. Lo importante era que la funcion logmessage pedida en el punto 2a tuviera
+como parametros un string y un int, y no dos strings, ya que en ese caso se confundiria con lo que pedian en la
+consigna 2b. 
+
+2.b)
+Para esta parte use sobrecarga de funciones, ya que piden que todos los mensajes sean escritos usando logmessage. 
+La unica diferencia son los parametros, que agregan mas contenido al mensaje que se tiene que escribir en el
+archivo. Para mayor claridad y evitar repetir codigo, decidi transformar esa informacion extra en un nuevo
+string y llamar con ese nuevo mensaje a la primer funcion logmessage(string, int). 
+*/
 
 enum varios {CRITICAL = 1, ERROR, WARNING, INFO, DEBUG, SECURITY};
 
-string prioridad_a_string(int prioridad) {
+string prioridad_string(int prioridad) { //para cada caso devuelvo lo mismo pero en string
     switch (prioridad) {
         case CRITICAL: return "CRITICAL";
         case ERROR: return "ERROR";
@@ -17,14 +28,13 @@ string prioridad_a_string(int prioridad) {
         case INFO: return "INFO";
         case DEBUG: return "DEBUG";
         case SECURITY: return "SECURITY";
-        default: return "UNKNOWN"; 
     }
 } 
 
 void logMessage(string mensaje, int prioridad){
-    ofstream outFile("logreport", ios :: app);
+    ofstream outFile("logreport", ios :: app); //abro o modifico un archivo
     if (outFile.is_open()){
-        outFile << "[" + prioridad_a_string(prioridad) + "] " + mensaje << endl; 
+        outFile << "[" + prioridad_string(prioridad) + "] " + mensaje << endl; 
         outFile.close();
     }
     else cerr << "Error al abrir el archivo"; 
@@ -32,12 +42,12 @@ void logMessage(string mensaje, int prioridad){
 
 //las siguientes funciones corresponden al ejercicio 2b
 void logMessage(string mensaje, string archivo, int linea){
-    string nuevo_mensaje = mensaje + " (" + archivo + " - l" + to_string(linea) + ")";
+    string nuevo_mensaje = mensaje + " (" + archivo + " - l" + to_string(linea) + ")"; //defino un nuevo mensaje
     logMessage(nuevo_mensaje, varios::ERROR);
 }
 
 void logMessage(string mensaje, string usuario){
-    string nuevo_mensaje = mensaje + " to " + usuario;
+    string nuevo_mensaje = mensaje + " to " + usuario; //defino un nuevo mensaje
     logMessage(nuevo_mensaje, varios::SECURITY);
 }
 
@@ -54,15 +64,15 @@ int main(){
     logMessage("Access granted", "Harry Potter");
 
     try{
-        throw runtime_error("Fallo en la ejecución");
+        throw runtime_error("Error"); //fuerzo un runtime error
     } 
-    catch (const std::runtime_error& e) {
+    catch (const std::runtime_error& e) { 
         logMessage("Runtime Error", varios::ERROR);
-        return 1;
+        return 1; //retorno que hubo un error
     } 
     catch (...) {
         logMessage("Error desconocido", varios::ERROR);
-        return 1;
+        return 1; //retorno que hubo un error
     }
     return 0;
 }
