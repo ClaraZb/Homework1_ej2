@@ -18,7 +18,7 @@ archivo. Para mayor claridad y evitar repetir codigo, decidi transformar esa inf
 string y llamar con ese nuevo mensaje a la primer funcion logmessage(string, int). 
 */
 
-enum varios {CRITICAL = 1, ERROR, WARNING, INFO, DEBUG, SECURITY};
+enum varios {CRITICAL = 1, ERROR, WARNING, INFO, DEBUG, SECURITY}; //le asigno a cada etiqueta un numero
 
 string prioridad_string(int prioridad) { //para cada caso devuelvo lo mismo pero en string
     switch (prioridad) {
