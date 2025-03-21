@@ -66,7 +66,7 @@ int main(){
     try{
         throw runtime_error("Error"); //fuerzo un runtime error
     } 
-    catch (const std::runtime_error& e) { 
+    catch (const runtime_error& e) { 
         logMessage("Runtime Error", varios::ERROR);
         return 1; //retorno que hubo un error
     } 
